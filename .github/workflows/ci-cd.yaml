@@ -28,24 +28,24 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/shortlet-app-image:latest ./app
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/shortlet-app-image:latest .
 
       - name: Push Docker image to GCR
         run: |
           gcloud auth configure-docker
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/shortlet-app-image:latest
 
-      - name: Terraform Init and Apply (Bucket)
+      - name: Terraform Init and Apply (State Bucket)
         working-directory: terraform/bucket
         run: |
           terraform init
-          terraform apply --auto-approve
+          terraform apply -auto-approve || true
 
-      - name: Terraform Init and Apply (Main)
+      - name: Terraform Init and Apply (Main Infrastructure)
         working-directory: terraform
         run: |
           terraform init
-          terraform apply --auto-approve
+          terraform apply -auto-approve
 
       - name: Get Application URL
         id: get-output
