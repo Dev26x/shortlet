@@ -62,6 +62,7 @@ jobs:
 
       - name: Get Application URL
         id: get-output
+        working-directory: terraform
         run: |
           APP_URL=$(terraform output -raw application_url)
           if [ -z "$APP_URL" ]; then
