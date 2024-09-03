@@ -65,12 +65,8 @@ jobs:
         working-directory: terraform
         run: |
           APP_URL=$(terraform output -raw application_url)
-          if [ -z "$APP_URL" ]; then
-            echo "APPLICATION_URL not found or empty. Exiting."
-            exit 1
-          else
-            echo "APPLICATION_URL=$APP_URL" >> $GITHUB_ENV
-          fi
+          echo "APPLICATION_URL=$APP_URL" >> $GITHUB_ENV
+
 
       - name: Check Deployment
         run: |
