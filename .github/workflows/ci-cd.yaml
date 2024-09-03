@@ -26,13 +26,6 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-      - name: Enable Service Usage API
-        run: |
-          gcloud services enable serviceusage.googleapis.com
-
-      - name: Wait for 60 seconds
-        run: sleep 60
-
       - name: Enable Required APIs
         run: |
           gcloud services enable cloudresourcemanager.googleapis.com
