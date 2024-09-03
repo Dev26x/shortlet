@@ -44,10 +44,10 @@ jobs:
       - name: Terraform Init and Apply (Main Infrastructure)
         working-directory: terraform
         env:
-          TF_VAR_project_id: ${{ secrets.TF_VAR_PROJECT_ID }}
-          TF_VAR_region: ${{ secrets.TF_VAR_REGION }}
-          TF_VAR_location: ${{ secrets.TF_VAR_LOCATION }}
-          TF_VAR_cluster_name: ${{ secrets.TF_VAR_CLUSTER_NAME }}
+          TF_VAR_project_id: ${{ secrets.TF_VAR_project_id }}
+          TF_VAR_region: ${{ secrets.TF_VAR_region }}
+          TF_VAR_location: ${{ secrets.TF_VAR_location }}
+          TF_VAR_cluster_name: ${{ secrets.TF_VAR_cluster_name }}
         run: |
           terraform init
           terraform apply -auto-approve
