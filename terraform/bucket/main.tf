@@ -7,6 +7,8 @@ resource "google_storage_bucket" "terraform_state" {
   name     = "${var.project_id}-terraform_state"
   location = "us-central1"
 
+  force_destroy = true
+
   versioning {
     enabled = true
   }

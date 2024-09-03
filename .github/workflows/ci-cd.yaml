@@ -1,0 +1,58 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.7.0
+        with:
+          version: 'latest'
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Authenticate to Google Cloud
+        run: |
+          gcloud auth activate-service-account --key-file=${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/shortlet-app-image:latest .
+
+      - name: Push Docker image to GCR
+        run: |
+          gcloud auth configure-docker
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/shortlet-app-image:latest
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2.0.0
+        with:
+          terraform_version: 1.5.0
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        id: terraform
+        run: terraform apply --auto-approve
+
+      - name: Get Application URL
+        id: get-output
+        run: |
+          echo "APPLICATION_URL=$(terraform output -raw application_url)" >> $GITHUB_ENV
+
+      - name: Check Deployment
+        run: |
+          curl -I ${{ env.APPLICATION_URL }}

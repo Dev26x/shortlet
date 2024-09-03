@@ -56,6 +56,10 @@ resource "kubernetes_service" "app" {
       target_port = 3000
     }
 
-    type = "LoadBalancer"
+    type = "LoadBalancer"  # Ensure this is set to LoadBalancer
   }
+
+  depends_on = [
+    kubernetes_deployment.app
+  ]
 }
