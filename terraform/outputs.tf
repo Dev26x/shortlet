@@ -8,6 +8,7 @@ output "gke_master_version" {
 
 output "application_url" {
   value = "http://${kubernetes_service.app.status[0].load_balancer[0].ingress[0].ip}:80"
+  description = "The URL of the application"
 }
 
 # Output the email of the CI/CD service account
