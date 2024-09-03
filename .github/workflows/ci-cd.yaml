@@ -28,7 +28,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/shortlet-app-image:latest .
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/shortlet-app-image:latest ./app
 
       - name: Push Docker image to GCR
         run: |
