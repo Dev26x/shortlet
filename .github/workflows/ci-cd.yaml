@@ -26,6 +26,14 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
+      - name: Enable Required APIs
+        run: |
+          gcloud services enable cloudresourcemanager.googleapis.com
+          gcloud services enable monitoring.googleapis.com
+          gcloud services enable logging.googleapis.com
+          gcloud services enable cloudtrace.googleapis.com
+          gcloud services enable cloudprofiler.googleapis.com
+
       - name: Build Docker image
         run: |
           docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/shortlet-app-image:latest ./app
