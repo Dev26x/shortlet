@@ -28,24 +28,24 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/shortlet-app-image:latest ./app
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/shortlet-app-image:latest .
 
       - name: Push Docker image to GCR
         run: |
           gcloud auth configure-docker
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/shortlet-app-image:latest
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.5.0
+      - name: Terraform Init and Apply (Bucket)
+        working-directory: terraform/bucket
+        run: |
+          terraform init
+          terraform apply --auto-approve
 
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform Apply
-        id: terraform
-        run: terraform apply --auto-approve
+      - name: Terraform Init and Apply (Main)
+        working-directory: terraform
+        run: |
+          terraform init
+          terraform apply --auto-approve
 
       - name: Get Application URL
         id: get-output
