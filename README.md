@@ -234,7 +234,7 @@ The project uses Terraform to manage the entire infrastructure on GCP. The main 
 
 
 - **IAM Roles and Policies (`terraform/iam.tf`):**
-  Creates a service account for CI/CD with appropriate roles.
+  This terraform configuration file creates a service account for CI/CD with appropriate roles.
 
   Result: 
 
