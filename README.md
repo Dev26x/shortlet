@@ -122,7 +122,7 @@ Before proceeding with the deployment, ensure you have the following:
 
 1. In the github repository, go to Settings > Secrets and add the following secrets:
    - `GCP_PROJECT_ID`: GCP project ID
-   - `GCP_SERVICE_ACCOUNT_KEY`: The content of the service account JSON key file
+   - `GCP_SERVICE_ACCOUNT_KEY`: The content of the service account JSON key file (*Remember to encode in BASE64 to ensure that your JSON key is handled safely and effectively within GitHub Secrets and your automated workflows.*)
    - `TF_VAR_project_id`: GCP project ID
    - `TF_VAR_region`: Preferred GCP region 
    - `TF_VAR_location`: Preferred GCP zone 
