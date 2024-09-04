@@ -11,12 +11,10 @@ output "application_url" {
   description = "The URL of the application"
 }
 
-# Output the email of the CI/CD service account
 output "ci_cd_service_account_email" {
   value = google_service_account.ci_cd.email
 }
 
-# Output the private key of the CI/CD service account key (sensitive)
 output "ci_cd_service_account_key_private_key" {
   value     = google_service_account_key.ci_cd_key.private_key
   sensitive = true

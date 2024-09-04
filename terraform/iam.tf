@@ -1,4 +1,4 @@
-# Create the service account for CI/CD
+# Create service account for CI/CD
 resource "google_service_account" "ci_cd" {
   account_id   = "ci-cd-service-account"
   display_name = "CI/CD Service Account"
@@ -8,7 +8,7 @@ resource "google_service_account" "ci_cd" {
 # Assign the 'Editor' role to the service account
 resource "google_project_iam_member" "ci_cd_iam" {
   project = var.project_id
-  role    = "roles/editor"  # Use a predefined role
+  role    = "roles/editor"  
   member  = "serviceAccount:${google_service_account.ci_cd.email}"
 }
 
