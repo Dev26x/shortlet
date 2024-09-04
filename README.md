@@ -211,7 +211,20 @@ To build and push the Docker image to GCR, follow these steps:
 
 ### **Terraform Configuration**
 
-The project uses Terraform to manage the entire infrastructure on GCP. The main components include:
+The project uses Terraform to manage the entire infrastructure on GCP. 
+
+The terrain configuration files are applied by running:
+
+```
+terraform init
+
+terraform apply
+```
+
+*Run the commands first in the terraform/bucket subdirectory before running the commands in the terraform root. This is because our backend.tf in terraform root is dependent on the state bucket.*
+
+
+The main components include:
 
 - **GKE Cluster and Node Pool (`terraform/gke.tf`):** 
   Sets up a GKE cluster with a primary node pool.
@@ -246,7 +259,17 @@ The project uses Terraform to manage the entire infrastructure on GCP. The main 
 - **Kubernetes Resources (`terraform/kubernetes.tf`):**
   Defines the Kubernetes Namespace, Deployment, and Service for the API.
 
+  After deployment, set the kubrnetes context to your current context using these  commands:
+
+  ```
+  kubectl config get-contexts
+
+  kubectl config use-context [context name] 
+  ```
+
   Result:
+
+  ![Set Context](images/set-context.png)
 
   ![cluster details](images/cluster-details-1.png)
 
