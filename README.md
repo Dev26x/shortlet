@@ -104,9 +104,10 @@ Before proceeding with the deployment, ensure you have the following:
 
 1. Create a new GCP project or use an existing one.
 
-2. Enable the following APIs in your GCP project:
+2. Ensure that the following APIs are enabled in your GCP project:
    - Kubernetes Engine API
    - Cloud Resource Manager API
+   - IAM Service Account Credentials API
    - Compute Engine API
    - Container Registry API
    - Cloud Monitoring API
